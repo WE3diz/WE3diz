@@ -88,3 +88,1387 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
+            - name: Setup Node.js environment
+  uses: actions/setup-node@v4.0.2
+  with:
+    # Set always-auth in npmrc.
+    always-auth: # optional, default is false
+    # Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.
+    node-version: # optional
+    # File containing the version Spec of the version to use.  Examples: package.json, .nvmrc, .node-version, .tool-versions.
+    node-version-file: # optional
+    # Target architecture for Node to use. Examples: x86, x64. Will use system architecture by default.
+    architecture: # optional
+    # Set this option if you want the action to check for the latest available version that satisfies the version spec.
+    check-latest: # optional
+    # Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.
+    registry-url: # optional
+    # Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).
+    scope: # optional
+    # Used to pull node distributions from node-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
+    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm.
+    cache: # optional
+    # Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies.
+    cache-dependency-path: # optional
+                      - name: Upload a Build Artifact
+  uses: actions/upload-artifact@v4.3.3
+  with:
+    # Artifact name
+    name: # optional, default is artifact
+    # A file, directory or wildcard pattern that describes what to upload
+    path: 
+    # The desired behavior if no files are found using the provided path.
+Available Options:
+  warn: Output a warning but do not fail the action
+  error: Fail the action with an error message
+  ignore: Do not output any warnings or errors, the action does not fail
+
+    if-no-files-found: # optional, default is warn
+    # Duration after which artifact will expire in days. 0 means using default retention.
+Minimum 1 day. Maximum 90 days unless changed from the repository settings page.
+
+    retention-days: # optional
+    # The level of compression for Zlib to be applied to the artifact archive. The value can range from 0 to 9: - 0: No compression - 1: Best speed - 6: Default compression (same as GNU Gzip) - 9: Best compression Higher levels will result in better compression, but will take longer to complete. For large files that are not easily compressed, a value of 0 is recommended for significantly faster uploads.
+
+    compression-level: # optional, default is 6
+    # If true, an artifact with a matching name will be deleted before a new one is uploaded. If false, the action will fail if an artifact for the given name already exists. Does not fail if the artifact does not exist.
+
+    overwrite: # optional, default is false
+                      - name: Cache
+  uses: actions/cache@v4.0.2
+  with:
+    # A list of files, directories, and wildcard patterns to cache and restore
+    path: 
+    # An explicit key for restoring and saving the cache
+    key: 
+    # An ordered list of keys to use for restoring stale cache if no cache hit occurred for key. Note `cache-hit` returns false in this case.
+    restore-keys: # optional
+    # The chunk size used to split up large files during upload, in bytes
+    upload-chunk-size: # optional
+    # An optional boolean when enabled, allows windows runners to save or restore caches that can be restored or saved respectively on other platforms
+    enableCrossOsArchive: # optional, default is false
+    # Fail the workflow if cache entry is not found
+    fail-on-cache-miss: # optional, default is false
+    # Check if a cache entry exists for the given input(s) (key, restore-keys) without downloading the cache
+    lookup-only: # optional, default is false
+    # Run the post step to save the cache even if another step before fails
+    save-always: # optional, default is false
+                      - name: Setup Java JDK
+  uses: actions/setup-java@v4.2.1
+  with:
+    # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
+    java-version: # optional
+    # The path to the `.java-version` file. See examples of supported syntax in README file
+    java-version-file: # optional
+    # Java distribution. See the list of supported distributions in README file
+    distribution: 
+    # The package type (jdk, jre, jdk+fx, jre+fx)
+    java-package: # optional, default is jdk
+    # The architecture of the package (defaults to the action runner's architecture)
+    architecture: # optional
+    # Path to where the compressed JDK is located
+    jdkFile: # optional
+    # Set this option if you want the action to check for the latest available version that satisfies the version spec
+    check-latest: # optional
+    # ID of the distributionManagement repository in the pom.xml file. Default is `github`
+    server-id: # optional, default is github
+    # Environment variable name for the username for authentication to the Apache Maven repository. Default is $GITHUB_ACTOR
+    server-username: # optional, default is GITHUB_ACTOR
+    # Environment variable name for password or token for authentication to the Apache Maven repository. Default is $GITHUB_TOKEN
+    server-password: # optional, default is GITHUB_TOKEN
+    # Path to where the settings.xml file will be written. Default is ~/.m2.
+    settings-path: # optional
+    # Overwrite the settings.xml file if it exists. Default is "true".
+    overwrite-settings: # optional, default is true
+    # GPG private key to import. Default is empty string.
+    gpg-private-key: # optional
+    # Environment variable name for the GPG private key passphrase. Default is $GPG_PASSPHRASE.
+    gpg-passphrase: # optional
+    # Name of the build platform to cache dependencies. It can be "maven", "gradle" or "sbt".
+    cache: # optional
+    # The path to a dependency file: pom.xml, build.gradle, build.sbt, etc. This option can be used with the `cache` option. If this option is omitted, the action searches for the dependency file in the entire repository. This option supports wildcards and a list of file names for caching multiple dependencies.
+    cache-dependency-path: # optional
+    # Workaround to pass job status to post job step. This variable is not intended for manual setting
+    job-status: # optional, default is ${{ job.status }}
+    # The token used to authenticate when fetching version manifests hosted on github.com, such as for the Microsoft Build of OpenJDK. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
+    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Name of Maven Toolchain ID if the default name of "${distribution}_${java-version}" is not wanted. See examples of supported syntax in Advanced Usage file
+    mvn-toolchain-id: # optional
+    # Name of Maven Toolchain Vendor if the default name of "${distribution}" is not wanted. See examples of supported syntax in Advanced Usage file
+    mvn-toolchain-vendor: # optional
+                      - name: Setup Go environment
+  uses: actions/setup-go@v5.0.0
+  with:
+    # The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks.
+    go-version: # optional
+    # Path to the go.mod or go.work file.
+    go-version-file: # optional
+    # Set this option to true if you want the action to always check for the latest available version that satisfies the version spec
+    check-latest: # optional
+    # Used to pull Go distributions from go-versions. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GHES, you can pass a personal access token for github.com if you are experiencing rate limiting.
+    token: # optional, default is ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    # Used to specify whether caching is needed. Set to true, if you'd like to enable caching.
+    cache: # optional, default is true
+    # Used to specify the path to a dependency file - go.sum
+    cache-dependency-path: # optional
+    # Target architecture for Go to use. Examples: x86, x64. Will use system architecture by default.
+    architecture: # optional
+                      - name: Close Stale Issues
+  uses: actions/stale@v9.0.0
+  with:
+    # Token for the repository. Can be passed in using `{{ secrets.GITHUB_TOKEN }}`.
+    repo-token: # optional, default is ${{ github.token }}
+    # The message to post on the issue when tagging it. If none provided, will not mark issues stale.
+    stale-issue-message: # optional
+    # The message to post on the pull request when tagging it. If none provided, will not mark pull requests stale.
+    stale-pr-message: # optional
+    # The message to post on the issue when closing it. If none provided, will not comment when closing an issue.
+    close-issue-message: # optional
+    # The message to post on the pull request when closing it. If none provided, will not comment when closing a pull requests.
+    close-pr-message: # optional
+    # The number of days old an issue or a pull request can be before marking it stale. Set to -1 to never mark issues or pull requests as stale automatically.
+    days-before-stale: # optional, default is 60
+    # The number of days old an issue can be before marking it stale. Set to -1 to never mark issues as stale automatically. Override "days-before-stale" option regarding only the issues.
+    days-before-issue-stale: # optional
+    # The number of days old a pull request can be before marking it stale. Set to -1 to never mark pull requests as stale automatically. Override "days-before-stale" option regarding only the pull requests.
+    days-before-pr-stale: # optional
+    # The number of days to wait to close an issue or a pull request after it being marked stale. Set to -1 to never close stale issues or pull requests.
+    days-before-close: # optional, default is 7
+    # The number of days to wait to close an issue after it being marked stale. Set to -1 to never close stale issues. Override "days-before-close" option regarding only the issues.
+    days-before-issue-close: # optional
+    # The number of days to wait to close a pull request after it being marked stale. Set to -1 to never close stale pull requests. Override "days-before-close" option regarding only the pull requests.
+    days-before-pr-close: # optional
+    # The label to apply when an issue is stale.
+    stale-issue-label: # optional, default is Stale
+    # The label to apply when an issue is closed.
+    close-issue-label: # optional
+    # The labels that mean an issue is exempt from being marked stale. Separate multiple labels with commas (eg. "label1,label2").
+    exempt-issue-labels: # optional, default is 
+    # The reason to use when closing an issue.
+    close-issue-reason: # optional, default is not_planned
+    # The label to apply when a pull request is stale.
+    stale-pr-label: # optional, default is Stale
+    # The label to apply when a pull request is closed.
+    close-pr-label: # optional
+    # The labels that mean a pull request is exempt from being marked as stale. Separate multiple labels with commas (eg. "label1,label2").
+    exempt-pr-labels: # optional, default is 
+    # The milestones that mean an issue or a pull request is exempt from being marked as stale. Separate multiple milestones with commas (eg. "milestone1,milestone2").
+    exempt-milestones: # optional, default is 
+    # The milestones that mean an issue is exempt from being marked as stale. Separate multiple milestones with commas (eg. "milestone1,milestone2"). Override "exempt-milestones" option regarding only the issues.
+    exempt-issue-milestones: # optional, default is 
+    # The milestones that mean a pull request is exempt from being marked as stale. Separate multiple milestones with commas (eg. "milestone1,milestone2"). Override "exempt-milestones" option regarding only the pull requests.
+    exempt-pr-milestones: # optional, default is 
+    # Exempt all issues and pull requests with milestones from being marked as stale. Default to false.
+    exempt-all-milestones: # optional, default is false
+    # Exempt all issues with milestones from being marked as stale. Override "exempt-all-milestones" option regarding only the issues.
+    exempt-all-issue-milestones: # optional, default is 
+    # Exempt all pull requests with milestones from being marked as stale. Override "exempt-all-milestones" option regarding only the pull requests.
+    exempt-all-pr-milestones: # optional, default is 
+    # Only issues or pull requests with all of these labels are checked if stale. Defaults to `` (disabled) and can be a comma-separated list of labels.
+    only-labels: # optional, default is 
+    # Only issues or pull requests with at least one of these labels are checked if stale. Defaults to `` (disabled) and can be a comma-separated list of labels.
+    any-of-labels: # optional, default is 
+    # Only issues with at least one of these labels are checked if stale. Defaults to `` (disabled) and can be a comma-separated list of labels. Override "any-of-labels" option regarding only the issues.
+    any-of-issue-labels: # optional, default is 
+    # Only pull requests with at least one of these labels are checked if stale. Defaults to `` (disabled) and can be a comma-separated list of labels. Override "any-of-labels" option regarding only the pull requests.
+    any-of-pr-labels: # optional, default is 
+    # Only issues with all of these labels are checked if stale. Defaults to `[]` (disabled) and can be a comma-separated list of labels. Override "only-labels" option regarding only the issues.
+    only-issue-labels: # optional, default is 
+    # Only pull requests with all of these labels are checked if stale. Defaults to `[]` (disabled) and can be a comma-separated list of labels. Override "only-labels" option regarding only the pull requests.
+    only-pr-labels: # optional, default is 
+    # The maximum number of operations per run, used to control rate limiting (GitHub API CRUD related).
+    operations-per-run: # optional, default is 30
+    # Remove stale labels from issues and pull requests when they are updated or commented on.
+    remove-stale-when-updated: # optional, default is true
+    # Remove stale labels from issues when they are updated or commented on. Override "remove-stale-when-updated" option regarding only the issues.
+    remove-issue-stale-when-updated: # optional, default is 
+    # Remove stale labels from pull requests when they are updated or commented on. Override "remove-stale-when-updated" option regarding only the pull requests.
+    remove-pr-stale-when-updated: # optional, default is 
+    # Run the processor in debug mode without actually performing any operations on live issues.
+    debug-only: # optional, default is false
+    # The order to get issues or pull requests. Defaults to false, which is descending.
+    ascending: # optional, default is false
+    # Delete the git branch after closing a stale pull request.
+    delete-branch: # optional, default is false
+    # The date used to skip the stale action on issue/pull request created before it (ISO 8601 or RFC 2822).
+    start-date: # optional, default is 
+    # The assignees which exempt an issue or a pull request from being marked as stale. Separate multiple assignees with commas (eg. "user1,user2").
+    exempt-assignees: # optional, default is 
+    # The assignees which exempt an issue from being marked as stale. Separate multiple assignees with commas (eg. "user1,user2"). Override "exempt-assignees" option regarding only the issues.
+    exempt-issue-assignees: # optional, default is 
+    # The assignees which exempt a pull request from being marked as stale. Separate multiple assignees with commas (eg. "user1,user2"). Override "exempt-assignees" option regarding only the pull requests.
+    exempt-pr-assignees: # optional, default is 
+    # Exempt all issues and pull requests with assignees from being marked as stale. Default to false.
+    exempt-all-assignees: # optional, default is false
+    # Exempt all issues with assignees from being marked as stale. Override "exempt-all-assignees" option regarding only the issues.
+    exempt-all-issue-assignees: # optional, default is 
+    # Exempt all pull requests with assignees from being marked as stale. Override "exempt-all-assignees" option regarding only the pull requests.
+    exempt-all-pr-assignees: # optional, default is 
+    # Exempt draft pull requests from being marked as stale. Default to false.
+    exempt-draft-pr: # optional, default is false
+    # Display some statistics at the end regarding the stale workflow (only when the logs are enabled).
+    enable-statistics: # optional, default is true
+    # A comma delimited list of labels to add when an issue or pull request becomes unstale.
+    labels-to-add-when-unstale: # optional, default is 
+    # A comma delimited list of labels to remove when an issue or pull request becomes stale.
+    labels-to-remove-when-stale: # optional, default is 
+    # A comma delimited list of labels to remove when an issue or pull request becomes unstale.
+    labels-to-remove-when-unstale: # optional, default is 
+    # Any update (update/comment) can reset the stale idle time on the issues and pull requests.
+    ignore-updates: # optional, default is false
+    # Any update (update/comment) can reset the stale idle time on the issues. Override "ignore-updates" option regarding only the issues.
+    ignore-issue-updates: # optional, default is 
+    # Any update (update/comment) can reset the stale idle time on the pull requests. Override "ignore-updates" option regarding only the pull requests.
+    ignore-pr-updates: # optional, default is 
+    # Only the issues or the pull requests with an assignee will be marked as stale automatically.
+    include-only-assigned: # optional, default is false
+                      - name: Garden Action
+  # You may pin to the exact commit or the version.
+  # uses: garden-io/garden-action@c221d0ec3ba851097c8175778a1be911b02cf989
+  uses: garden-io/garden-action@v1.2
+  with:
+    # All command line options for the garden cli command.
+
+If not provided, the garden-action will only install garden and export the KUBECONFIG and GARDEN_AUTH_TOKEN
+environment variables for use in scripts in later steps.
+
+    command: # optional
+    # Garden logger type. Defaults to basic.
+    logger-type: # optional, default is basic
+    # Garden log level. Defaults to verbose.
+    log-level: # optional, default is verbose
+    # A base64 encoded string of the kubeconfig to use with Garden. Optional.
+    kubeconfig: # optional
+    # Path where Garden expects the kubeconfig. Defaults to $HOME/kube/config.
+    kubeconfig-location: # optional, default is ${{ runner.temp }}/garden/kubeconfig
+    # Garden version. Defaults to latest stable.
+    garden-version: # optional, default is latest
+    # An auth token to authenticate in case your project is connected to Garden Cloud. Optional.
+    garden-auth-token: # optional
+    # A path to a garden project in a repository.
+
+Only necessary if there are multiple garden projects in a repository, or when the project.garden.yml is in a subdirectory.
+
+    garden-workdir: # optional
+    # Github token for releases API. Required. Defaults to the `github.token` context variable.
+    github-token: # default is ${{ github.token }}
+                      - name: mobbdev
+  # You may pin to the exact commit or the version.
+  # uses: mobb-dev/action@d885db729514077fbcf30bce356c3d68153e61ab
+  uses: mobb-dev/action@v1.1
+  with:
+    # Path to SAST report file
+    report-file: 
+    # Mobb API key
+    api-key: 
+    # GitaHub Token
+    github-token: 
+                      - name: New Relic JUnit Reporter
+  # You may pin to the exact commit or the version.
+  # uses: newrelic/junit-reporter-action@a225f3d3753f08921149ddd803040fe593c4ad5c
+  uses: newrelic/junit-reporter-action@v0.3.0
+  with:
+    # Your New Relic Ingest License key.
+    ingestLicenseKey: 
+    # Your New Relic account ID. Custom events representing your test run will be posted to this account.
+    accountId: 
+    # The geographical region for your New Relic account - US or EU. Default: US
+    region: # optional, default is US
+    # The path to the JUnit output file.
+    testOutputPath: 
+    # Any custom attributes to include in JSON format.
+    customAttributes: # optional
+                      - name: Lightlytics Publisher
+  # You may pin to the exact commit or the version.
+  # uses: lightlytics/publisher@0dbe04a6743c38e602f504a4ccefd9935c243d3f
+  uses: lightlytics/publisher@latest
+  with:
+    # Relative path to the directory of which terraform init command executed
+    working-directory: 
+    # Hostname of Lightlytics environment (example: env.lightlytics.com)
+    ll-hostname: 
+    # Relative path to Terraform plan file (JSON format)
+    plan-json: # optional
+    # Optional, Terraform Cloud token used to retrieve terraform plan output
+    tfc-token: # optional
+    # Optional, Terraform Cloud run id that was created after using terraform plan command
+    tfc-run-id: # optional
+    # Relative path to Terraform graph file (dot format)
+    tf-graph: # optional
+    # Secret token per customer used for authentication with Lightlytics (stored in GitHub)
+    collection-token: 
+    # GitHub token used to send a comment on Pull requests
+    github-token: # optional
+                      - name: Quality Clouds Build Check for Servicenow
+  # You may pin to the exact commit or the version.
+  # uses: qualityclouds/action-application-scan@4d7fb9d7fb5f21c8379a6a55b36aff5a61b582a3
+  uses: qualityclouds/action-application-scan@1.0.0
+  with:
+    # You need to provide a valid API key to connect the Quality Clouds ruleset against which your code will be checked
+    token: 
+    # The instance url
+    instance_url: 
+    # Use cloud mode to runh a Feature branch scan
+    mode: # optional
+    # Use cloud mode to runh a Feature branch scan
+    api_url: # optional
+                      - name: DesigniteJava
+  # You may pin to the exact commit or the version.
+  # uses: DesigniteTools/DJAction@5de0ca090d14125c6057ba4ec74563c1020ca372
+  uses: DesigniteTools/DJAction@v1.0.1
+  with:
+    # Personal access token
+    PAT: # optional, default is No PAT provided
+    # provide the QScored api
+    QSCORED_API_KEY: # optional, default is No qscore provided
+    # User name (email) for QScored
+    EMAIL: # optional, default is No username provided
+    # QScored project name
+    PRJ_NAME: # optional, default is ${{ github.event.repository.name }}
+    # is code quality results open-source? True/False
+    OPEN_SOURCE: # optional
+    # Designite license key - optional
+    D_KEY: # optional, default is No key
+                      - name: SecureStack Application Composition Analysis
+  # You may pin to the exact commit or the version.
+  # uses: SecureStackCo/actions-code@c2c35840882d041474c505c1045da157025cd57e
+  uses: SecureStackCo/actions-code@v0.1.1
+  with:
+    # SecureStack API key - generate an API key at https://app.securestack.com
+    securestack_api_key: 
+    # SecureStack Application ID - can be retrieved by accessing required application at https://app.securestack.com
+    securestack_app_id: 
+    # Severities lower than this value will be reported in the workflow console but will not cause an error for the action; value should be one of: critical | high | medium | low
+    severity: 
+    # Severities lower than this value will be reported in the workflow console but will not cause an error for the action; value should be one of: critical | high | medium | low
+    language: 
+    # Optional flags for the bloodhound-cli code command - run bloodhound cli code --help for more details
+    flags: # optional, default is 
+                      - name: Xanitizer Security Analysis
+  # You may pin to the exact commit or the version.
+  # uses: RIGS-IT/xanitizer-action@87d13138fb113b727cbe040c744a15a2b4fe5316
+  uses: RIGS-IT/xanitizer-action@v1.0.1
+  with:
+    # String which is used as input for a Xanitizer license file. Note: It is recommended to use a GitHub secret to store the license file content like XANITIZER_LICENSE and access the content in the configuration via the GitHub secret parameter. Please see https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets for details. Note: If the license is a floating license and a proxy server is used to access the license server, please specify the proxy server settings. If no settings are specified, the settings from the Xanitizer properties file will be used.
+    license: # optional
+    # Number of attempts to get a license token from the license server. Note: If the used Xanitizer license is a machine bound license, this parameter will be ignored. If the used Xanitizer license is a floating license it may happen that all tokens are in use or the connection to the license server is not available at startup. In such cases, no license token can be requested successfully from the license server to start Xanitizer and the headless process would terminate with a license error. When this parameter is set to a value greater than zero, Xanitizer attempts every minute to request a license token until the specified count has been reached. Setting this parameter to zero disables the repetition.
+    licenseServerRetryCount: # optional
+    # Relative path under $GITHUB_WORKSPACE where the project was checked out. Note: Please use the same value as for parameter `path` of the configured actions/checkout action (see https://github.com/actions/checkout#usage parameter `path`).
+    checkoutPath: # optional
+    # The output location of the overview report. This has to be either a list of files or the parameter has to be undefined or empty if no overview reports should be written. Allowed file extensions are: pdf, html, docx.
+    overviewReportOutputFile: # optional
+    # Comma separated list of output locations of the overview reports. This has to be either a list of files or the parameter has to be undefined or empty if no overview reports should be written. Allowed file extensions are: pdf, html, docx.
+    overviewReportOutputFiles: # optional
+    # The output location of the findings list report. This has to be either a list of files or the parameter has to be undefined or empty if no findings list reports should be written. Allowed file extensions are: pdf, html, docx, xml, csv, sarif.
+    findingsListReportOutputFile: # optional
+    # Comma separated list of output locations of the findings list reports. This has to be either a list of files or the parameter has to be undefined or empty if no findings list reports should be written. Allowed file extensions are: pdf, html, docx, xml, csv, sarif. Note: If no report file has been secified, i.e., neither an overview report nor a findings list report, both a Xanitizer-Findings-List.pdf and a Xanitizer-Findings-List.sarif report will be generated in the checkout directory specified by $GITHUB_WORKSPACE with the optional relative parameter `checkoutPath` as default.
+    findingsListReportOutputFiles: # optional
+    # Boolean flag specifying if only findings with problem classifications are written to the findings list report.
+    onlyProblemsInFindingsListReport: # optional, default is true
+    # Boolean flag specifying if all the details of a finding are written to the findings list report, e.g. if the output contains all steps of a path. Note: Only relevant if the file extension of the parameter `findingsListReportOutputFile` is xml, html, or sarif.
+    generateDetailsInFindingsListReport: # optional, default is true
+    # The path to the Xanitizer configuration file of the project that should be analyzed. Either this parameter or the parameter `rootDirectory` may be specified, but not both. Note: If neither the parameter `configFile` nor the parameter `rootDirectory` has been specified, the parameter `rootDirectory` is set to the checkout directory specified by $GITHUB_WORKSPACE with the optional relative parameter `checkoutPath`.
+    configFile: # optional
+    # The root directory, to be used for default set-ups. Either this parameter or the parameter `configFile` may be specified, but not both. Note: If neither the parameter `configFile` nor the parameter `rootDirectory` has been specified, the parameter `rootDirectory` is set to the checkout directory specified by $GITHUB_WORKSPACE with the optional relative parameter `checkoutPath`.
+    rootDirectory: # optional
+    # The project name that should be used. Only relevant if the parameter `rootDirectory` is specified. If not given, the simple name of the root directory is used.
+    projectName: # optional
+    # The directory where to put the generated configuration file. Only relevant if the parameter `rootDirectory` is specified. If not given, the configuration file is generated in the `rootDirectory`.
+    configFileDirectory: # optional
+    # Boolean flag specifying if an existing config file is to be overwritten. Only relevant if the parameter `rootDirectory` is specified.
+    overwriteConfigFile: # optional
+    # Boolean flag specifying whether Xanitizer uses NodeJS to compile Angular and TypeScript projects to JavaScript code itself or not. This could be a potential risk if someone has manipulated the external ng or the tsc script. If the code is already compiled to JavaScript, best with a source map, this option can be set to `false` true - enables the compilation of Angular and TypeScript code to JavaScript by Xanitizer itself false - disables the compilation of Angular and TypeScript code to JavaScript by Xanitizer itself and some Xanitizer workspace information will be generated if Angular or Typescript files are found in the project not set - if this option is not set and Angular or Typescript files are found in the project, a Xanitizer workspace error will be generated 
+    compileToJavaScript: # optional, default is true
+    # Boolean flag specifying if npm audit should be executed. The npm audit APIs can be used to report on known vulnerable node.js libraries. This requires an Internet connection and so has to be allowed explicitly. This is only relevant for NodeJS projects.
+    performNodeAudit: # optional, default is true
+    # Boolean flag specifying whether the task should fail if there are search paths configured that do not exist.
+    haltOnMissingSearchPaths: # optional
+    # A comma - separated list of issue groups that will let the task fail if for any of them, a Xanitizer error issue occurs. Possible values are ALL_ERRORS, WORKSPACE_ERRORS, CALL_GRAPH_ERRORS, ANALYSIS_ERRORS, MIGRATION_ERRORS. If the value is not set, this means that issues are not relevant for the success of the task.
+    haltOnIssues: # optional
+    # Boolean flag specifying whether the task should fail if there are findings with a rating equal or higher than the value defined for `findingsRatingThreshold`.
+    haltOnFindings: # optional
+    # A rating value. Only used if the parameter `haltOnFindings` is set.
+    findingsRatingThreshold: # optional
+    # Boolean flag specifying whether the OWASP Dependency Check repository should be updated or not. Note: The OWASP Dependency Check is based on vulnerability data stored in a local repository. It is recommended to update the local OWASP Dependency Check repository on a regular basis via remote access to the National Vulnerability Database (NIST). If a proxy server is used to access the internet, please specify the proxy server settings otherwise the settings from the Xanitizer properties file will be used.
+    updateOwaspDependencyCheckRepository: # optional
+    # The logging level to be used when running Xanitizer. Values: OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL.
+    logLevel: # optional
+    # Xanitizer`s project data directory, if it is not the default one in <HOME>/.Xanitizer.
+    projectDataDirectory: # optional
+    # Boolean flag specifying whether the task should fail if there are * NEW * findings with a rating equal or higher than the value defined for `newFindingsRating`.
+    haltOnNewFindings: # optional
+    # A rating value. Only used if the parameter `haltOnNewFindings` is set.
+    newFindingsRatingThreshold: # optional
+    # Optional path to the local Maven repository. Note: If no settings are specified, the settings from the Xanitizer properties file will be used.
+    mavenRepository: # optional
+    # Boolean flag specifying whether a snapshot should be created after parsing and analyzing the current version or not.
+    createSnapshot: # optional
+    # Optional comment added to the newly created snapshot. Only relevant if the parameter `createSnapshot` is true.
+    snapshotComment: # optional
+    # The output directory of the project export. Note: If the parameter is undefined or an empty string, the project is not exported.
+    exportDirectory: # optional
+    # Boolean flag specifying if snapshots should be exported or not. The parameter is only used if an export directory is set. If the parameter is not set or empty, no snapshots are exported.
+    exportSnapshots: # optional
+    # The passphrase for the project export. The parameter is only used if an export directory is set. If the parameter is not set or empty, the exported project is not encrypted. Note: It is recommended to use a GitHub secret to store the export like XANITIZER_EXPORT_PASSPHRASE and access the content in the configuration via the GitHub secret parameter. Please see https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets for details.
+    exportPassphrase: # optional
+    # The path to an exported Xanitizer project archive file. If specified, this project is merged into the current project. This means that all more recent user adaptations, findings and issues are migrated into the current project.
+    mergedProject: # optional
+    # The passphrase for the merged project. The parameter is only necessary if the parameter `mergedProject` is set and the merged project is encrypted. Note: It is recommended to use a GitHub secret to store the export passphrase like XANITIZER_EXPORT_PASSPHRASE. and access the content in the configuration via the GitHub secret parameter. Please see https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets for details.
+    importPassphrase: # optional
+    # Optional proxy server to access the internet to update the OWASP Dependency Check repository or to request a license token from the public license server in case of a floating license via a proxy. Note: If no settings are specified, the settings from the Xanitizer properties file will be used.
+    proxyServer: # optional
+    # Optional proxy server port.
+    proxyPort: # optional
+    # Optional proxy server user name.
+    proxyUser: # optional
+    # Optional proxy server user password.
+    proxyPassword: # optional
+                      - name: Setup ReSharper Command Line Tools
+  # You may pin to the exact commit or the version.
+  # uses: goit/setup-resharper@2b537041effd120f0590b04ba5bf5d5188b68abb
+  uses: goit/setup-resharper@v3.0.1
+  with:
+    # ReSharper CLT version to use. Example: 2019.3.4
+    version: # optional
+                      - name: github-action-auto-format
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-auto-format@970af4c15a720047204400fe5b5ae52fb2991e9b
+  uses: cloudposse/github-action-auto-format@v0.12.0
+  with:
+    # The path on the github-runner where the auto-format action scripts are checked out at runtime
+    actions-files-checkout-path: # optional, default is github-action-auto-format
+    # GitHub username for writing new commits
+    bot-name: # optional, default is cloudpossebot
+    # Email address associated with the GitHub user for writing new commits
+    bot-email: # optional
+    # Name of formatting task to execute. (Options include: readme, github, terraform, and context.)
+    format-task: 
+    # GitHub Token for use in `github_format.sh` and PR creation steps. This token must be granted `workflows` permissions.
+    workflow-token: 
+                      - name: paloaltonetworks/cov
+  # You may pin to the exact commit or the version.
+  # uses: PaloAltoNetworks/cov@a5c8c2cfd4bbfa59abe1f12eb10a6e455dea7b8a
+  uses: PaloAltoNetworks/cov@3.1.0
+  with:
+    # The main branch name.
+    main_branch: # default is main
+    # Running mode. Either 'coverage', 'send-status' or 'both'.
+    cov_mode: # default is coverage
+    # The name of the coverage file to use.
+    cov_file: # default is coverage.out
+    # Default required coverage percentage.
+    cov_threshold: # optional, default is 90
+    # The version to use for cov.
+    cov_version: # default is ${{github.action_ref}}
+    # In mode 'send-status', pass the workflow id that generated the cov report.
+
+    workflow_run_id: # optional
+    # In mode 'send-status', pass the workflow head_sha.
+
+    workflow_head_sha: # optional
+                      - name: Create Artifact YAML
+  # You may pin to the exact commit or the version.
+  # uses: opencontextinc/create-artifact-yaml@218aadb9180fd982c8f2aaa592573297bdb9550e
+  uses: opencontextinc/create-artifact-yaml@v1.0.1
+  with:
+    # Type of artifact. One of sbom, container, package, or image
+    type: 
+    # URL/URI of the artifact
+    url: 
+    # Directory to save YAML files to. If not specified then the directory oc-artifact-yaml will be used.
+    directory: # optional
+                      - name: New Relic JUnit Reporter
+  # You may pin to the exact commit or the version.
+  # uses: newrelic/junit-reporter-action@a225f3d3753f08921149ddd803040fe593c4ad5c
+  uses: newrelic/junit-reporter-action@v0.3.0
+  with:
+    # Your New Relic Ingest License key.
+    ingestLicenseKey: 
+    # Your New Relic account ID. Custom events representing your test run will be posted to this account.
+    accountId: 
+    # The geographical region for your New Relic account - US or EU. Default: US
+    region: # optional, default is US
+    # The path to the JUnit output file.
+    testOutputPath: 
+    # Any custom attributes to include in JSON format.
+    customAttributes: # optional
+                      - name: Satellite file upload
+  # You may pin to the exact commit or the version.
+  # uses: IBM/satellite-config-upload-action@fa11109a47c82d0adf3f02c3a3ba59d4a4db7054
+  uses: IBM/satellite-config-upload-action@v1.0.1
+  with:
+    # IBM Cloud API key
+    apikey: 
+    # Satellite Config channelUuid
+    channelUuid: 
+    # File to upload
+    filename: 
+    # Name of the new version
+    versionName: 
+    # IBM Cloud Satellite API endpoint
+    satelliteHost: # optional, default is https://config.satellite.cloud.ibm.com/graphql
+    # IBM Cloud IAM endpoint
+    tokenHost: # optional, default is https://iam.cloud.ibm.com/identity/token
+                      - name: LaunchDarkly Flags
+  # You may pin to the exact commit or the version.
+  # uses: launchdarkly/gha-flags@fe09bc304808a02ea7f39198524565be98278011
+  uses: launchdarkly/gha-flags@v1.0.0
+  with:
+    # Server-side SDK key for environment.
+    sdk-key: # default is 
+    # Provide a list flag keys and default value in a comma separated format with a newline between each flag you want evaluated. `example-flag,true`
+    flags: # default is 
+    # The key of the context object used in a feature flag evaluation
+    context-key: # optional, default is ld-github-action-flags
+    # Whether to send analytics events back to LaunchDarkly
+    send-events: # optional, default is true
+    # Whether to use the LaunchDarkly SDK in offline mode
+    offline: # optional, default is false
+    # The base URI for the LaunchDarkly server. Most users should use the default value.
+    base-uri: # optional, default is https://app.launchdarkly.com
+    # The base URI for the LaunchDarkly streaming server. Most users should use the default value.
+    stream-uri: # optional, default is https://stream.launchdarkly.com
+    # The base URI for the LaunchDarkly events server. Most users should use the default value.
+    events-uri: # optional, default is https://events.launchdarkly.com
+    # Allows you to specify basic authentication parameters for an optional HTTP proxy. Usually of the form username:password.
+    proxy-auth: # optional
+    # Allows you to specify a host for an optional HTTP proxy. Both the host and port must be specified to enable proxy support.
+    proxy-host: # optional
+    # Allows you to specify a port for an optional HTTP proxy. Both the host and port must be specified to enable proxy support.
+    proxy-port: # optional
+    # When using an HTTP proxy, specifies whether it is accessed via http or https
+    proxy-scheme: # optional
+                      - name: Knative Service Manager
+  # You may pin to the exact commit or the version.
+  # uses: redhat-actions/kn-service-manager@9d456952c2b59c36db2bb2b83adfa983b1c787a4
+  uses: redhat-actions/kn-service-manager@v1
+  with:
+    # The Knative Service Name
+    service_name: 
+    # The Kubernetes Namespace to deploy to. Defaults to current context's namespace.
+    namespace: # optional
+    # The Knative service command, accepted commands are create, update, apply and delete
+    command: # optional, default is create
+    # The Knative Service Image
+    container_image: 
+    # Any extra arguments to append to the kn <command>
+    kn_extra_args: # optional
+    # The registry user to use to create the image pull secret
+    registry_user: # optional
+    # The registry user password
+    registry_password: # optional
+    # "Pass --force to kn create. If the service already exists,
+the service will be replaced, instead of kn create failing.
+This input has no effect if command is not create"
+
+    force_create: # optional, default is false
+                      - name: Shipa Cloud
+  # You may pin to the exact commit or the version.
+  # uses: shipa-corp/shipa-gh-action@4633febbc36b24abb54f10b848c4aaca8a5b5745
+  uses: shipa-corp/shipa-gh-action@0.0.2
+  with:
+    # File path to Shipa action yml file
+    shipa-action: 
+                      - name: Destroy Environment
+  # You may pin to the exact commit or the version.
+  # uses: parasoft/destroy-environment-action@d743e3bbffd5ff59a19764ae27b8b4c0bed6d4e8
+  uses: parasoft/destroy-environment-action@1.0.2
+  with:
+    # CTP URL
+    ctpUrl: 
+    # CTP Username
+    ctpUsername: 
+    # CTP Password
+    ctpPassword: 
+    # Name of the system
+    system: 
+    # Name of the environment
+    environment: 
+                      - name: Escape - GraphQL Security
+  # You may pin to the exact commit or the version.
+  # uses: Escape-Technologies/action@cd29483761720734146426bd66ab13ae0134e6b1
+  uses: Escape-Technologies/action@v0.1.1
+  with:
+    # The id of your application
+    application_id: 
+    # Your escape api key
+    api_key: 
+    # Maximum blocking time for a CI/CD run
+    timeout: # optional
+                     - name: "Setup Aliyun CLI" Action for GitHub Actions
+  # You may pin to the exact commit or the version.
+  # uses: aliyun/setup-aliyun-cli-action@09a5f86915bb556e27bf050e9a5e339aeb073df5
+  uses: aliyun/setup-aliyun-cli-action@v1
+  with:
+    # The version of Aliyun CLI
+    version: # optional, default is latest
+                      - name: Deploy Static Files to GCP Storage
+  # You may pin to the exact commit or the version.
+  # uses: bitovi/github-actions-gcp-bucket@b80cbadca19a68e2283caf5f9d85eaa4017f6362
+  uses: bitovi/github-actions-gcp-bucket@first-release
+  with:
+    # Specifies if this action should checkout the code
+    checkout: # optional, default is true
+    # GCP Storage bucket to use. Defaults to `${org}-${repo}-{branch}-bucket`
+    bucket_name: # optional
+    # The name of the file(s) to upload to the bucket. Wildcards supported. Duplicate Files will be overwritten.
+    file_name: 
+    # GCP Service Account Key JSON set as GOOGLE_CREDENTIALS secret.
+    gcp_access_key: 
+    # `.env` file to be used with the app from Github secrets
+    dot_env: # optional
+    # `.env` file to be used with the app from Github variables
+    ghv_env: # optional
+    # Set to 'true' to Destroy the bucket and all child files.
+    bucket_destroy: # optional, default is false
+                     - name: Azure Resource Manager (ARM) Template Deployment
+  # You may pin to the exact commit or the version.
+  # uses: whiteducksoftware/azure-arm-action@9bae2e95df87dbd4acae11deb0765be7256fd141
+  uses: whiteducksoftware/azure-arm-action@v3.3
+  with:
+    # Paste output of `az ad sp create-for-rbac -o json` as value of secret variable: AZURE_CREDENTIALS
+    creds: 
+    # Provide the name of a resource group.
+    resourceGroupName: 
+    # Specify the path to the Azure Resource Manager template.
+    templateLocation: 
+    # Specifies the name of the resource group deployment to create.
+    deploymentName: 
+    # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group).
+    deploymentMode: # optional, default is Incremental
+    # Specify either path to the Azure Resource Manager parameters file or pass them as 'key1=value1;key2=value2;...'.
+    parameters: # optional
+    # Specify either path to the Azure Resource Manager override parameters file or pass them as 'key1=value1;key2=value2;...'.
+    overrideParameters: # optional
+                        - name: Setup HashiCorp Nomad Pack
+  # You may pin to the exact commit or the version.
+  # uses: hashicorp/setup-nomad-pack@55d84e47a4cd1a032dc5d3a6c3bd644833bd9d24
+  uses: hashicorp/setup-nomad-pack@0.9.1
+  with:
+    # The nomad-pack version to install and add to PATH. Supports semver versioning.
+    version: # default is 0.0.1-techpreview2
+                      - name: Deploy to Algorithmia
+  # You may pin to the exact commit or the version.
+  # uses: algorithmiaio/algorithmia-modeldeployment-action@14310c6bd07101452e0a1bc435aa2e306e62aa30
+  uses: algorithmiaio/algorithmia-modeldeployment-action@1.1.0
+  with:
+    # Algorithmia API Key, used when uploading the model file
+    algorithmia_api_key: 
+    # Algorithmia Username, used as Git Commit Username and as part of default model upload path
+    algorithmia_username: 
+    # Algorithmia Email, used as Git Commit Email
+    algorithmia_email: # optional, default is githubactions@placeholder.email
+    # Algorithmia Password. Only required if the algorithm is hosted on Algorithmia.
+    algorithmia_password: # optional
+    # Github username owning the algorithm repository, used to clone the algorithm repository. Only required if the algorithm is hosted on Github.
+    github_username: # optional
+    # Github Personal Access Token, used to clone the algorithm repository. Only required if the algorithm is hosted on Github.
+    github_pat: # optional
+    # Algorithmia Algorithm name
+    algorithmia_algoname: 
+    # Algorithmia data collection name to upload the model file
+    algorithmia_uploadpath: # default is data://$ALGORITHMIA_USERNAME/$ALGORITHMIA_ALGONAME
+    # Path of the model file to be uploaded to Algorithmia
+    model_path: # default is model.pkl
+    # Path of the notebook to be executed by this action
+    notebook_path: # optional, default is model_training.ipynb
+    # Git host for the Algorithmia algorithm repository. Change to git.algorithmia.com if the algorithm is hosted on Algorithmia Marketplace or git.YOUR_DOMAIN for enterprise installations.
+    git_host: # optional, default is github.com
+    # API endpoint Algorithmia installation, for enterprise customers.
+    algorithmia_api: # optional, default is https://api.algorithmia.com
+                      - name: Create NuGet Package for Octopus Deploy
+  # You may pin to the exact commit or the version.
+  # uses: OctopusDeploy/create-nuget-package-action@64e3cec8f57c50b3e7cdfabd006e4d1a24b94f4d
+  uses: OctopusDeploy/create-nuget-package-action@v3.0.2
+  with:
+    # Package Id.
+    package_id: 
+    # Package version.
+    version: 
+    # The folder to put the resulting package in, relative to the current working directory; not the base path.
+    output_folder: 
+    # The base path for the input files.
+    base_path: 
+    # Multi-line list of files to include in the package. Supports globbing.
+    files: 
+    # Description to include in the Nuspec file. 
+    nuspec_description: 
+    # Multi-line list of authors to include in the Nuspec file.
+    nuspec_authors: 
+    # Release notes to include in the Nuspec file.
+    nuspec_release_notes: # optional
+                      - name: Lightstep Services Change Report
+  # You may pin to the exact commit or the version.
+  # uses: lightstep/lightstep-action-snapshot@166ec5f31d611858ebe9ed3437848e8fe675fb89
+  uses: lightstep/lightstep-action-snapshot@v0.2.1
+  with:
+    # The organization associated with your Lightstep account (usually your company name)
+    lightstep_organization: # optional
+    # The Lightstep project associated with this repository
+    lightstep_project: # optional
+    # Only show services in the snapshot from this comma-separated list
+    lightstep_service_filter: # optional
+    # The query to use when taking a snapshot
+    lightstep_snapshot_query: # optional
+    # The Lightstep snapshot id to summarize
+    lightstep_snapshot_id: # optional
+    # The Lightstep snapshot id to compare with lightstep_snapshot_id
+    lightstep_snapshot_compare_id: # optional
+    # The key to access the Lightstep Public API
+    lightstep_api_key: # optional
+    # Github API Token
+    github_token: # optional
+    # If set to true, will not add a comment to pull-requests
+    disable_comment: # optional
+                      - name: "Setup Aliyun CLI" Action for GitHub Actions
+  # You may pin to the exact commit or the version.
+  # uses: aliyun/setup-aliyun-cli-action@09a5f86915bb556e27bf050e9a5e339aeb073df5
+  uses: aliyun/setup-aliyun-cli-action@v1
+  with:
+    # The version of Aliyun CLI
+    version: # optional, default is latest
+                      - name: Shipa Cloud
+  # You may pin to the exact commit or the version.
+  # uses: shipa-corp/shipa-gh-action@4633febbc36b24abb54f10b848c4aaca8a5b5745
+  uses: shipa-corp/shipa-gh-action@0.0.2
+  with:
+    # File path to Shipa action yml file
+    shipa-action: 
+                      - name: Knative Service Manager
+  # You may pin to the exact commit or the version.
+  # uses: redhat-actions/kn-service-manager@9d456952c2b59c36db2bb2b83adfa983b1c787a4
+  uses: redhat-actions/kn-service-manager@v1
+  with:
+    # The Knative Service Name
+    service_name: 
+    # The Kubernetes Namespace to deploy to. Defaults to current context's namespace.
+    namespace: # optional
+    # The Knative service command, accepted commands are create, update, apply and delete
+    command: # optional, default is create
+    # The Knative Service Image
+    container_image: 
+    # Any extra arguments to append to the kn <command>
+    kn_extra_args: # optional
+    # The registry user to use to create the image pull secret
+    registry_user: # optional
+    # The registry user password
+    registry_password: # optional
+    # "Pass --force to kn create. If the service already exists,
+the service will be replaced, instead of kn create failing.
+This input has no effect if command is not create"
+
+    force_create: # optional, default is false
+                     - name: Garden Action
+  # You may pin to the exact commit or the version.
+  # uses: garden-io/garden-action@c221d0ec3ba851097c8175778a1be911b02cf989
+  uses: garden-io/garden-action@v1.2
+  with:
+    # All command line options for the garden cli command.
+
+If not provided, the garden-action will only install garden and export the KUBECONFIG and GARDEN_AUTH_TOKEN
+environment variables for use in scripts in later steps.
+
+    command: # optional
+    # Garden logger type. Defaults to basic.
+    logger-type: # optional, default is basic
+    # Garden log level. Defaults to verbose.
+    log-level: # optional, default is verbose
+    # A base64 encoded string of the kubeconfig to use with Garden. Optional.
+    kubeconfig: # optional
+    # Path where Garden expects the kubeconfig. Defaults to $HOME/kube/config.
+    kubeconfig-location: # optional, default is ${{ runner.temp }}/garden/kubeconfig
+    # Garden version. Defaults to latest stable.
+    garden-version: # optional, default is latest
+    # An auth token to authenticate in case your project is connected to Garden Cloud. Optional.
+    garden-auth-token: # optional
+    # A path to a garden project in a repository.
+
+Only necessary if there are multiple garden projects in a repository, or when the project.garden.yml is in a subdirectory.
+
+    garden-workdir: # optional
+    # Github token for releases API. Required. Defaults to the `github.token` context variable.
+    github-token: # default is ${{ github.token }}
+                       - name: Deploy Prometheus and Grafana
+  # You may pin to the exact commit or the version.
+  # uses: bitovi/github-actions-deploy-prometheus@60abab51796e327667fc11d63a8ac75b9e2834b9
+  uses: bitovi/github-actions-deploy-prometheus@v0.1.0
+  with:
+    # Specifies if this action should checkout the code
+    checkout: # optional, default is true
+    # AWS access key ID
+    aws_access_key_id: 
+    # AWS secret access key
+    aws_secret_access_key: 
+    # AWS session token, if you're using temporary credentials
+    aws_session_token: # optional
+    # AWS default region
+    aws_default_region: # default is us-east-1
+    # Auto-generated by default so it's unique for org/repo/branch. Set to override with custom naming the unique AWS resource identifier for the deployment. Defaults to `${org}-${repo}-${branch}`.
+    aws_resource_identifier: # optional
+    # A list of additional tags that will be included on created resources. Example: `{"key1": "value1", "key2": "value2"}`
+    aws_extra_tags: # optional, default is {}
+    # Secret name to pull env variables from AWS Secret Manager, could be a comma separated list, read in order. Expected JSON content.
+    env_aws_secret: # optional
+    # File containing environment variables to be used with the app
+    env_repo: # optional
+    # `.env` file to be used with the app from Github secrets
+    env_ghs: # optional
+    # `.env` file to be used with the app from Github variables
+    env_ghv: # optional
+    # The AWS EC2 instance type
+    aws_ec2_instance_type: # optional, default is t2.medium
+    # The AWS IAM instance profile to use for the EC2 instance. Use if you want to pass an AWS role with specific permissions granted to the instance
+    aws_ec2_instance_profile: # optional
+    # Creates a Secret in AWS secret manager to store a kypair
+    aws_ec2_create_keypair_sm: # optional
+    # Root disk size for the EC2 instance
+    aws_ec2_instance_vol_size: # optional, default is 10
+    # A JSON object of additional tags that will be included on created resources. Example: `{"key1": "value1", "key2": "value2"}`
+    aws_ec2_additional_tags: # optional
+    # AMI filter to use when searching for an AMI to use for the EC2 instance. Defaults to `ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*`
+    aws_ec2_ami_filter: # optional, default is ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*
+    # Set to true to provision infrastructure (with Terraform) but skip the app deployment (with ansible)
+    infrastructure_only: # optional, default is false
+    # Path to the grafana datasource directory
+    grafana_datasource_dir: # optional, default is observability/grafana/datasources
+    # Path to the prometheus config file
+    prometheus_config: # optional, default is observability/prometheus/prometheus.yml
+    # Set to "true" to Destroy the created AWS infrastructure for this instance
+    tf_stack_destroy: # optional, default is false
+    # Change this to be anything you want to. Carefull to be consistent here. A missing file could trigger recreation, or stepping over destruction of non-defined objects.
+    tf_state_file_name: # optional
+    # Append a string to the tf-state-file. Setting this to `unique` will generate `tf-state-aws-unique`. Can co-exist with the tf_state_file_name variable. 
+    tf_state_file_name_append: # optional
+    # AWS S3 bucket to use for Terraform state. Defaults to `${org}-${repo}-{branch}-tf-state-aws`
+    tf_state_bucket: # optional
+    # Force purge and deletion of S3 tf_state_bucket defined. Any file contained there will be destroyed. `tf_stack_destroy` must also be `true`
+    tf_state_bucket_destroy: # optional
+    # Define the root domain name for the application. e.g. bitovi.com. If empty, ELB URL will be provided.
+    aws_domain_name: # optional
+    # Define the sub-domain part of the URL. Defaults to `${org}-${repo}-{branch}`
+    aws_sub_domain: # optional
+    # Deploy application to root domain. Will create root and www DNS records. Domain must exist in Route53.
+    aws_root_domain: # optional
+    # Existing certificate ARN to be used in the ELB. Use if you manage a certificate outside of this action. See https://docs.aws.amazon.com/acm/latest/userguide/gs-acm-list.html for how to find the certificate ARN.
+    aws_cert_arn: # optional
+    # Generates and manage the root certificate for the application to be used in the ELB.
+    aws_create_root_cert: # optional
+    # Generates and manage the sub-domain certificate for the application to be used in the ELB.
+    aws_create_sub_cert: # optional
+    # Set this to true if you want not to use a certificate in the ELB.
+    aws_no_cert: # optional
+    # Define if a VPC should be created
+    aws_vpc_create: # optional
+    # Set a specific name for the VPC
+    aws_vpc_name: # optional
+    # Define Base CIDR block which is divided into subnet CIDR blocks. Defaults to 10.0.0.0/16.
+    aws_vpc_cidr_block: # optional
+    # Comma separated list of public subnets. Defaults to 10.10.110.0/24
+    aws_vpc_public_subnets: # optional
+    # Comma separated list of private subnets. If none, none will be created.
+    aws_vpc_private_subnets: # optional
+    # Comma separated list of availability zones. Defaults to `aws_default_region.
+    aws_vpc_availability_zones: # optional
+    # AWS VPC ID. Accepts `vpc-###` values.
+    aws_vpc_id: # optional
+    # Specify a Subnet to be used with the instance. If none provided, will pick one.
+    aws_vpc_subnet_id: # optional
+    # A JSON object of additional tags that will be included on created resources. Example: `{"key1": "value1", "key2": "value2"}`
+    aws_vpc_additional_tags: # optional
+                      - name: Instrument pipeline
+  # You may pin to the exact commit or the version.
+  # uses: autometrics-dev/instrument-pipeline@142e4e6cbc109bb37c705daa856b6462689b3ef8
+  uses: autometrics-dev/instrument-pipeline@v0.1.0
+  with:
+    # URL to the aggregation gateway, for example `http://localhost:9091`
+    pushgateway: 
+    # Type of the aggregation gateway, one of `prometheus`, `gravel`, or `zapier`. Currently only changes the url format in case of prometheus
+    gatewaytype: # optional
+    # Comma separated list of buckets for duration histogram, with or without the brackets []
+    buckets: # optional
+                      - name: Sync Templates
+  # You may pin to the exact commit or the version.
+  # uses: fiberplane/sync-templates@e35786a91f4d6ec8f9b4df0ccfa66770cff78083
+  uses: fiberplane/sync-templates@v1
+  with:
+    # API token used to access the Fiberplane API with
+    api-token: 
+    # ID of the workspace to which the templates should be uploaded to
+    workspace-id: 
+    # Base URL of the Fiberplane API
+    fp-base-url: # optional, default is https://studio.fiberplane.com
+    # Custom directory that should be monitored for Template JSONNET files (default: .fiberplane/templates/)
+    templates-directory: # optional, default is .fiberplane/templates/
+    # Version of the Fiberplane CLI to use (latest by default)
+    fp-version: # optional, default is latest
+                      - name: PagerDuty Change Events
+  # You may pin to the exact commit or the version.
+  # uses: PagerDuty/pagerduty-change-events-action@ec2c5d5cff79059924d663a7427733785626c3bf
+  uses: PagerDuty/pagerduty-change-events-action@v1.3.0
+  with:
+    # The integration key that identifies the service the change was made to.
+    integration-key: 
+    # Custom event summary. If provided the GitHub event type is ignored and the given summary used. A link to the run is included in the event.
+    custom-event: # optional
+                      - name: rootly-pulse
+  # You may pin to the exact commit or the version.
+  # uses: rootlyhq/pulse-action@7aa3a8baf889ff8b37a489dde53edece73b24a64
+  uses: rootlyhq/pulse-action@v1.1.1
+  with:
+    # Summary of the pulse
+    summary: 
+    # A API key for rootly
+    api_key: 
+    # Environments associated with the pulse. Separate with commas.
+    environments: # optional
+    # Services associated with the pulse. Separate with commas.
+    services: # optional
+    # Labels associated with the pulse. Separate with commas and separate key-value pair with = (no spaces before or after =).
+    labels: # optional
+    # Source of the pulse
+    source: # optional
+    # Refs associated with the pulse. Separate with commas and separate key-value pair with = (no spaces before or after =).
+    refs: # optional
+                      - name: Publish event
+  # You may pin to the exact commit or the version.
+  # uses: fiberplane/publish-event@63e125ddca44bfb308eec949bcb22f80230394b0
+  uses: fiberplane/publish-event@v1.2
+  with:
+    # API token used to access the Fiberplane API with
+    api-token: 
+    # Title of the newly created event
+    title: # default is GitHub Action
+    # Labels to add to the event.
+Format: key=value|key=value|key=value
+
+    labels: 
+    # Time at which the event occurred. Defaults to current time. Format should be a RFC 3339 formatted string
+    time: # optional
+    # ID of the workspace to which the event should be posted
+    workspace-id: 
+    # Base URL of the Fiberplane API
+    fp-base-url: # default is https://studio.fiberplane.com
+                      - name: elmah.io Upload Source Map Action
+  # You may pin to the exact commit or the version.
+  # uses: elmahio/github-upload-source-map-action@02d3e0a71cb7741a98860405f287c4abf95f62bc
+  uses: elmahio/github-upload-source-map-action@v1
+  with:
+    # An API key with permission to upload source maps.
+    apiKey: 
+    # The ID of the log which should contain the minified JavaScript and source map.
+    logId: 
+    # An URL to the online minified JavaScript file. The URL can be absolute or relative but will always be converted to a relative path (no protocol, domain, and query parameters). elmah.io uses this path to lookup any lines in a JS stack trace that will need de-minification.
+    path: 
+    # A path to the source map file. Only files with an extension of .map and content type of application/json will be accepted.
+    sourceMap: 
+    # A path to the minified JavaScript file. Only files with an extension of .js and content type of text/javascript will be accepted.
+    minifiedJavaScript: 
+                      - name: Lightstep Pre-Deploy Check
+  # You may pin to the exact commit or the version.
+  # uses: lightstep/lightstep-action-predeploy@22bec553a6d0fb3de5026acb1159085601f76408
+  uses: lightstep/lightstep-action-predeploy@v0.2.6
+  with:
+    # The organization associated with your Lightstep account (usually your company name)
+    lightstep_organization: # optional
+    # The Lightstep project associated with this repository
+    lightstep_project: # optional
+    # The key to access the Lightstep Public API
+    lightstep_api_key: # optional
+    # The token to access the Rollbar API
+    rollbar_api_token: # optional
+    # The token to access the PagerDuty API
+    pagerduty_api_token: # optional
+    # If set to true, collapse all conditions to a single table row
+    rollup_conditions: # optional
+    # If set to true, will not add a comment to pull-requests
+    disable_comment: # optional
+                      - name: Datadog JUnitXML Upload
+  # You may pin to the exact commit or the version.
+  # uses: DataDog/junit-upload-github-action@056dec14f19687cd7d1e97f2009df81f8e64d621
+  uses: DataDog/junit-upload-github-action@v1.2.0
+  with:
+    # Datadog API key to use to upload the junit files.
+    api-key: 
+    # Service name to use with the uploaded test results.
+    service: 
+    # The Datadog site to upload the files to.
+    datadog-site: # default is datadoghq.com
+    # JUnit files to upload.
+    files: # default is .
+    # Controls the maximum number of concurrent file uploads.
+    concurrency: # default is 20
+    # The node version used to install datadog-ci
+    node-version: # default is 16
+    # Datadog tags to associate with the uploaded test results.
+    tags: # optional
+    # Datadog env to use for the tests.
+    env: # optional
+    # Set to "true" to enable forwarding content from XML reports as logs.
+    logs: # optional
+    # Extra args to be passed to the datadog-ci cli.
+    extra-args: # optional, default is 
+                      - name: Lightstep Services Change Report
+  # You may pin to the exact commit or the version.
+  # uses: lightstep/lightstep-action-snapshot@166ec5f31d611858ebe9ed3437848e8fe675fb89
+  uses: lightstep/lightstep-action-snapshot@v0.2.1
+  with:
+    # The organization associated with your Lightstep account (usually your company name)
+    lightstep_organization: # optional
+    # The Lightstep project associated with this repository
+    lightstep_project: # optional
+    # Only show services in the snapshot from this comma-separated list
+    lightstep_service_filter: # optional
+    # The query to use when taking a snapshot
+    lightstep_snapshot_query: # optional
+    # The Lightstep snapshot id to summarize
+    lightstep_snapshot_id: # optional
+    # The Lightstep snapshot id to compare with lightstep_snapshot_id
+    lightstep_snapshot_compare_id: # optional
+    # The key to access the Lightstep Public API
+    lightstep_api_key: # optional
+    # Github API Token
+    github_token: # optional
+    # If set to true, will not add a comment to pull-requests
+    disable_comment: # optional
+                      - name: Create Asana Task
+  # You may pin to the exact commit or the version.
+  # uses: honeycombio/gha-create-asana-task@804456b9b876e7a13fcc47e8839407c16acd03c5
+  uses: honeycombio/gha-create-asana-task@v1.0.1
+  with:
+    # Asana PAT
+    asana-secret: 
+    # Your Asana Workspace ID
+    asana-workspace-id: 
+    # Your Asana Project ID
+    asana-project-id: 
+    # Your Asana Section ID (column the task should belong to)
+    asana-section-id: 
+    # Name for Asana task
+    asana-task-name: 
+    # Description for Asana task
+    asana-task-description: # optional
+    # Date on which Asana task is due (YYYY-MM-DD)
+    asana-due-date: # optional
+    # List of tag IDs to associate with Asana task
+    asana-tags: # optional
+                      - name: Add comment to Asana Task
+  # You may pin to the exact commit or the version.
+  # uses: Asana/comment-on-task-github-action@c0947e8462e93e32f5baa70b1ac983905258b53a
+  uses: Asana/comment-on-task-github-action@v1.2
+  with:
+    # The Asana secret for the action. Read more about how to generate this secret at https://github.com/Asana/create-app-attachment-github-action#step-2-set-up-a-repository-secret-for-the-secret-token
+    asana-secret: # default is 
+    # List of allowed projects. The action will only add comments to tasks in these projects. Only one of allowed-projects or blocked-projects can be specified.
+    allowed-projects: # optional, default is 
+    # List of allowed projects. The action will not add comments to tasks or subtasks of tasks in any of these projects. Only one of allowed-projects or blocked-projects can be specified.
+    blocked-projects: # optional, default is 
+    # What comment the action should use. Learn how to customize this message at https://github.com/Asana/create-app-attachment-github-action#step-2-set-up-a-repository-secret-for-the-secret-token
+    comment-text: # default is 
+                      - name: Scheduled Milestones
+  # You may pin to the exact commit or the version.
+  # uses: readmeio/scheduled-milestones@0e87deaf0083675156111def24b8a29a97aa6fb1
+  uses: readmeio/scheduled-milestones@v1.0.0
+  with:
+    # GitHub authentication token
+    token: 
+    # A prefix for your scheduled milestone title.
+    title: # default is Up for Review
+    # A comma-separated list of the days of the upcoming week that you want milestones for.
+    days: 
+    # Options for `Date.toLocaleDateString()`. See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString for details.
+    date_options: # optional
+                      - name: Summary Issues
+  # You may pin to the exact commit or the version.
+  # uses: sourcegraph/summary-issues@9a33468abb4f7415f4dad4424f7ad8aee136fbe9
+  uses: sourcegraph/summary-issues@v1.2.1
+  with:
+    # The newest comment on an issue that matches this regular expression is used in the summary. If not provided, the most recent comment is always used.
+    summaryCommentRegex: # optional
+                     - name: Glo Add Label To Cards
+  # You may pin to the exact commit or the version.
+  # uses: Axosoft/glo-action-label-card@2e09694cfad6ece65ac232fbe90d317786e3fe5c
+  uses: Axosoft/glo-action-label-card@v1
+  with:
+    # Auth token for user
+    authToken: 
+    # Array of { cardId, boardId } objects
+    cards: 
+    # Name of label to add to cards
+    label: 
+                    - name: Glo Move Cards
+  # You may pin to the exact commit or the version.
+  # uses: Axosoft/glo-action-move-card@e676e6f0589d83e0c55902e07397f269bedb804c
+  uses: Axosoft/glo-action-move-card@v1
+  with:
+    # Auth token for user
+    authToken: 
+    # Array of { cardId, boardId } objects
+    cards: 
+    # Name of column to move cards to
+    column: 
+                       - name: tf-siesta
+  # You may pin to the exact commit or the version.
+  # uses: Typeform/siesta@ef96b0b260f3a98848aee6b847288a9eb7b4bd20
+  uses: Typeform/siesta@v1.3
+  with:
+    # string, contents of credentials.json
+    google-credentials: 
+    # string, contents of token.json
+    google-token: 
+    # string, the calendar id to check. If not specified, will take the primary calendar of that account
+    google-calendar-id: # optional
+    # string, in case the calendar is busy with events at the given timeframe, this message will be displayed in the github error
+    custom-calendar-busy-message: # optional
+    # string, in case the calendar is not busy with events at the given timeframe, this message will be displayed in the console log
+    custom-calendar-not-busy-message: # optional
+    # boolean, controls if the build should fail if the calendar is busy. Needs hard-failure in true. default is true
+    fail-if-busy: # optional
+    # boolean, if true, fails the build on any error. If false, throws an warning instead.
+    hard-failure: # optional
+    # the interval of time, starting from the moment of execution, on which to check that the calendar is busy. Default 0.1 seconds.
+    minutes-interval: # optional
+                        - name: Glo Add Assignee To Cards
+  # You may pin to the exact commit or the version.
+  # uses: Axosoft/glo-action-assign-card@c5bbc23bc4e7acfec6385554375e845faeb98007
+  uses: Axosoft/glo-action-assign-card@v1
+  with:
+    # Auth token for user
+    authToken: 
+    # Array of { cardId, boardId } objects
+    cards: 
+    # Username of user to assign to card
+    assignee: 
+                  - name: ServiceNow ITSM Actions
+  # You may pin to the exact commit or the version.
+  # uses: shundor/servicenow-actions@e61808a890f5eeae51a75fc433ed91842e46040c
+  uses: shundor/servicenow-actions@v1.0
+  with:
+    # ServiceNow instance host
+    sn_host: 
+    # ServiceNow username
+    sn_username: 
+    # ServiceNow password
+    sn_password: 
+    # ServiceNow client ID
+    sn_client_id: 
+    # ServiceNow client secret
+    sn_client_secret: 
+    # ServiceNow module name
+    sn_module: 
+    # ServiceNow module parameters
+    sn_module_params: 
+    # Enable debug mode
+    debug: # optional, default is false
+                     - name: Priority List
+  # You may pin to the exact commit or the version.
+  # uses: iterative/priority-list@646ca456f8a08495ae4c6259bd20ab274b9eaa03
+  uses: iterative/priority-list@v1.0.2
+  with:
+    # Token with read access to all analysed repos
+    github-token: 
+    # 
+    repos: 
+    # weight for number of comments
+    weight_activity: # default is 14
+    # weight for reactions to original issue
+    weight_reactions: # default is 7
+    # weight for days of inactivity
+    weight_staleness: # default is 1
+    # weight for days open
+    weight_age: # default is 0.142857
+    # weight multiplier for PRs (compared to issues)
+    multiplier_pr: # default is 7
+    # weight multiplier for labels (negative to exclude)
+    multiplier_labels: # default is example:-1 epic:0.142857 blocked:0.142857 invalid:0.142857
+    # largest pN-label (lowest priority)
+    p_label_graveyard: # default is 4
+    # URL to post slack payload to (requires `people.json`)
+    slack_webhook: # optional
+                          - name: Autify for Web Run Test Plan
+  # You may pin to the exact commit or the version.
+  # uses: autifyhq/web-run-test-plan-action@d7c3dc4ecacc9e71f48914d12c2b1ab2effbd1c0
+  uses: autifyhq/web-run-test-plan-action@v1.0.0
+  with:
+    # Personal Access Token
+    autify_for_web_api_token: 
+    # Test Plan ID that you want to run
+    test_plan_id: 
+    # Test Plan API base URL
+    test_plan_api_base_url: # optional, default is https://app.autify.com/api/v1/schedules/
+                       - name: Deploy Environment
+  # You may pin to the exact commit or the version.
+  # uses: parasoft/deploy-environment-action@486e9382c6c2958fcbaad60b895da799d16730c2
+  uses: parasoft/deploy-environment-action@1.0.2
+  with:
+    # CTP URL
+    ctpUrl: 
+    # CTP Username
+    ctpUsername: 
+    # CTP Password
+    ctpPassword: 
+    # Name of the system
+    system: 
+    # Name of the environment
+    environment: 
+    # Name of the environment instance to provision
+    instance: 
+    # Fail action and abort on provisioning failure
+    abortOnFailure: # optional
+    # Virtual assets in the environment will be replicated on another server
+    copyToVirtualize: # optional
+    # The environment assets will be copied to a Virtualize server matching this name
+    virtServerName: # optional
+    # The name for the replicated environment can be used to later destroy the environment
+    newEnvironmentName: # optional
+    # Duplicate associated data repositories before provisioning
+    duplicateDataRepo: # optional
+    # Where to duplicate data repository
+    duplicateType: # optional
+    # The host of the data repository server
+    repoHost: # optional
+    # The port of the data repository server
+    repoPort: # optional
+    # The username of the data repository server
+    repoUsername: # optional
+    # The password of the data repository server
+    repoPassword: # optional
+                     - name: Datadog JUnitXML Upload
+  # You may pin to the exact commit or the version.
+  # uses: DataDog/junit-upload-github-action@056dec14f19687cd7d1e97f2009df81f8e64d621
+  uses: DataDog/junit-upload-github-action@v1.2.0
+  with:
+    # Datadog API key to use to upload the junit files.
+    api-key: 
+    # Service name to use with the uploaded test results.
+    service: 
+    # The Datadog site to upload the files to.
+    datadog-site: # default is datadoghq.com
+    # JUnit files to upload.
+    files: # default is .
+    # Controls the maximum number of concurrent file uploads.
+    concurrency: # default is 20
+    # The node version used to install datadog-ci
+    node-version: # default is 16
+    # Datadog tags to associate with the uploaded test results.
+    tags: # optional
+    # Datadog env to use for the tests.
+    env: # optional
+    # Set to "true" to enable forwarding content from XML reports as logs.
+    logs: # optional
+    # Extra args to be passed to the datadog-ci cli.
+    extra-args: # optional, default is 
+                       - name: RapidAPI Testing Trigger
+  # You may pin to the exact commit or the version.
+  # uses: RapidAPI/gh-api-testing-trigger@b5adafb0971d0f6ee473dfe345886e46b3b0a2ac
+  uses: RapidAPI/gh-api-testing-trigger@v0.0.3
+  with:
+    # ID of the test to run
+    test: 
+    # The location the test will be executed in
+    location: # default is AWS-US-EAST-1
+    # The environment ID the test will run in
+    environment: # optional
+                     - name: Setup protoc (node16)
+  # You may pin to the exact commit or the version.
+  # uses: redefinedev/setup-protoc@7e9fc54f4cd4bf6c18233907ea2bf311cf0defe7
+  uses: redefinedev/setup-protoc@v0.0.2
+  with:
+    # Version to use. Example: 23.2
+    version: # optional, default is 23.x
+    # Include github pre-releases in latest version calculation
+    include-pre-releases: # optional, default is false
+    # GitHub repo token to use to avoid rate limiter
+    repo-token: # optional, default is 
+                   - name: Setup Autify Command Line Interface (CLI)
+  # You may pin to the exact commit or the version.
+  # uses: autifyhq/actions-setup-cli@62decfdbb7902d221d4865ae6170d5dbcd3c90db
+  uses: autifyhq/actions-setup-cli@v2.1.2
+  with:
+    # Shell installer URL
+    shell-installer-url: # optional, default is https://autify-cli-assets.s3.amazonaws.com/autify-cli/channels/stable/install-cicd.bash
+                      - name: LocalStack GitHub Actions Login
+  # You may pin to the exact commit or the version.
+  # uses: localstack/localstack-github-actions-login@55cb73dc128e0bc83217ca742569d28579e3c064
+  uses: localstack/localstack-github-actions-login@v0.1.0
+  with:
+    # Username
+    email: 
+    # Password
+    password: 
+                     - name: Rainforest QA GitHub Action
+  # You may pin to the exact commit or the version.
+  # uses: rainforestapp/github-action@5855f2c2427c564554663926b143b9ce3bce17c8
+  uses: rainforestapp/github-action@v3.2.5
+  with:
+    # An arbitrary string to associate with the run
+    description: # optional, default is 
+    # Only run tests tied to this Run Group
+    run_group_id: 
+    # Use a specific environment for this run
+    environment_id: # optional, default is 
+    # Use a specific URL for this run
+    custom_url: # optional, default is 
+    # How other currently in-progress runs should be handled. Values are `cancel` to cancel runs in the same environment as your new run and `cancel-all` to cancel all runs
+    conflict: # optional, default is 
+    # The execution method to use for this run
+    execution_method: # optional, default is 
+    # DEPRECATED: Use `execution_method` instead
+    crowd: # optional, default is 
+    # Manually entered release information about the release the run is associated with
+    release: # optional, default is 
+    # If set to a value > 0 and a test fails, it will be retried within the same run, up to that number of times
+    automation_max_retries: # optional, default is 
+    # Use a specific Rainforest branch for this run
+    branch: # optional, default is 
+    # Your Rainforest QA API token
+    token: 
+    # Do not wait for a run to complete before exiting
+    background: # optional, default is 
+    # Set to true to run parameter validations without starting a new Rainforest run
+    dry_run: # optional, default is 
+    # The cache key to use for saving/restoring a Rainforest run ID (used to rerun failed tests)
+    cache_key: # optional, default is ${{ github.job }}-${{ github.action }}
+                     - name: Upload build to Autify for Mobile
+  # You may pin to the exact commit or the version.
+  # uses: autifyhq/actions-mobile-build-upload@684d28839c4a6c66bda6901f3483b69cff4999fe
+  uses: autifyhq/actions-mobile-build-upload@v2.4.0
+  with:
+    # Access token of Autify for Mobile.
+    access-token: 
+    # Workspace ID to upload the build file.
+    workspace-id: 
+    # File path to the iOS app (*.app) or Android app (*.apk).
+    build-path: 
+    # A path to `autify` which will be used to invoke Autify CLI internally. Default is searching from PATH.
+    autify-path: # optional, default is autify
+    # Autify CLI installer URL
+    autify-cli-installer-url: # optional, default is https://autify-cli-assets.s3.amazonaws.com/autify-cli/channels/stable/install-cicd.bash
+                       - name: Destroy Environment
+  # You may pin to the exact commit or the version.
+  # uses: parasoft/destroy-environment-action@d743e3bbffd5ff59a19764ae27b8b4c0bed6d4e8
+  uses: parasoft/destroy-environment-action@1.0.2
+  with:
+    # CTP URL
+    ctpUrl: 
+    # CTP Username
+    ctpUsername: 
+    # CTP Password
+    ctpPassword: 
+    # Name of the system
+    system: 
+    # Name of the environment
+    environment: 
+                      - name: SSH Remote Commands
+                uses: appleboy/ssh-action@v1.0.3
+                          - name: Setup Node.js environment
+                uses: actions/setup-node@v4.0.2
+                                - name: GitHub Script
+                uses: actions/github-script@v7.0.1
+                          - name: Build iOS Action
+                uses: sparkfabrik/ios-build-action@v2.3.2
+                           - name: Build Android App
+                uses: sparkfabrik/android-build-action@v1.5.0
+                          - name: setup android sdk for self hosted runner
+                uses: amyu/setup-android@v4
+            
